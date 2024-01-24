@@ -20,10 +20,11 @@ Sélectionnez upload files
 
 Glissez-déposez le fichier demandé dans le tp.
 
+Indiquer le nom du tp dans le premier champ de texte.
+
 Cliquez sur le bouton vert "commit changes"
 
 
 ## Obtenir la correction des TPs
 
 A chaque fin de TP vous pourrez retrouver une correction générale à la racine du dépôt 
-
