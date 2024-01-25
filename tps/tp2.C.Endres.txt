@@ -1,0 +1,31 @@
+USE compta;
+
+CREATE TABLE ARTICLE (
+    ID int(6) PRIMARY KEY, 
+    REF varchar(10), 
+    DESIGNATION	varchar(40), 
+    PRIX decimal(10),
+    ID_FOU int(6)
+	);
+
+CREATE TABLE FOURNISSEUR (
+    ID  int(6) PRIMARY KEY, 
+    NOM varchar(20)
+	);
+
+CREATE TABLE BON (
+    ID int(6) PRIMARY KEY, 
+    NUMERO varchar(20),
+    DATE_CMDE date,
+    DELAI int(5),
+    ID_FOU int(6)
+    );
+
+CREATE TABLE COMPO (
+    ID	int(6) AUTO_INCREMENT PRIMARY KEY,
+    QTE	int(6),
+    ID_ART int(6),
+    ID_BON int(6)
+    );
+
+
