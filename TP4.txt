@@ -1,0 +1,20 @@
+a) SELECT * FROM article;
+
+b) SELECT REF, DESIGNATION FROM article WHERE article.PRIX>= 2;
+
+c) SELECT * FROM article WHERE article.PRIX>= 2 AND article.PRIX <=6.25;
+
+d) SELECT * FROM article WHERE article.PRIX BETWEEN 2 AND 6.25;
+
+e) SELECT * FROM article WHERE NOT(article.PRIX BETWEEN 2 AND 6.25);
+
+f)SELECT * FROM article JOIN fournisseur ON article.ID_FOU = fournisseur.ID 
+WHERE fournisseur.NOM = 'Française d\'Imports' OR fournisseur.NOM = 'Dubois & Fils';
+
+g) SELECT * FROM article JOIN fournisseur ON article.ID_FOU = fournisseur.ID 
+WHERE fournisseur.NOM in ('Française d\'Imports' ,'Dubois & Fils');
+
+h) SELECT * FROM article JOIN fournisseur ON article.ID_FOU = fournisseur.ID 
+WHERE NOT(fournisseur.NOM IN ('Française d\'Imports' ,'Dubois & Fils'));
+
+i) SELECT * FROM bon WHERE bon.DATE_CMDE BETWEEN '2019-02-01' AND '2019-04-30';
