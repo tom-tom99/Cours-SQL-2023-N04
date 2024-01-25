@@ -3,7 +3,7 @@ CREATE TABLE Article (
     REF varchar(255),
     DESIGNATION varchar(255),
     PRIX decimal(10,2),
-    ID_FOU varchar(255)
+    ID_FOU int(8)
     )
 
 CREATE TABLE Fournisseur (
@@ -13,12 +13,15 @@ CREATE TABLE Fournisseur (
 
 CREATE TABLE Bon (
     ID int PRIMARY KEY,
-    NOM varchar(255)
+    DATE_CMDE datetime,
+    DELAI time,
+    ID_FOU int(8)
 )
 
 CREATE TABLE Compo (
     ID int AUTO_INCREMENT PRIMARY KEY,
     QTE int,
-    ID_ART int,
-    ID_BON int
+    ID_ART int(8),
+    ID_BON int(8)
     )
+
