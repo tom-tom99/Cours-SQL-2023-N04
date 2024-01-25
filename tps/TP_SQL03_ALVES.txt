@@ -1,0 +1,49 @@
+CREATE TABLE compta.ARTICLE (
+	ID INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT , 
+	REF VARCHAR(10) UNIQUE NOT NULL , 
+	DESIGNATION VARCHAR(50) NOT NULL , 
+	PRIX DECIMAL(6,2) NOT NULL , 
+	ID_FOU INT(10) NOT NULL 
+);
+CREATE TABLE compta.FOURNISSEUR (
+	ID INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT ,
+	NOM VARCHAR(30) NOT NULL
+);
+CREATE TABLE compta.BON (
+    ID INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT ,
+    NUMERO VARCHAR(10) UNIQUE NOT NULL ,
+    DATE_CMDE DATE NOT NULL ,
+    DELAI INT(4) , /* délai de livraison (en jours) */
+    ID_FOU INT(10)
+);
+CREATE TABLE compta.COMPO (
+    ID INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT ,
+    QTE INT(4) NOT NULL ,
+    ID_ART INT(10) NOT NULL, FOREIGN KEY(ID_ART) REFERENCES ARTICLE(ID), /* synthaxe de création directe */
+    ID_BON INT(10) NOT NULL, FOREIGN KEY(ID_BON) REFERENCES BON(ID),
+);
+-- ligne de commentaire
+ALTER TABLE ARTICLE 
+ADD CONSTRAINT FOREIGN KEY(ID_FOU) REFERENCES FOURNISSEUR(ID);
+
+ALTER TABLE BON
+ADD CONSTRAINT FOREIGN KEY(ID_FOU) REFERENCES FOURNISSEUR(ID);
+
+INSERT INTO FOURNISSEUR (NOM) values ('Française d’Import');
+INSERT INTO FOURNISSEUR (NOM) values ('FDM SA');
+INSERT INTO FOURNISSEUR (NOM) values ('Dubois & Fils');
+
+INSERT INTO ARTICLE (REF, DESIGNATION, PRIX, ID_FOU) values 
+('A01', 'Perceuse P1', 74.99, 1),
+('F01', 'Boulon laiton 4x40 mm (sachet de 10)', 2.25, 2),
+('F02', 'Boulon laiton 5x40 mm (sachet de 10)', 4.45, 2),
+('D01', 'Boulon laiton 5x40 mm (sachet de 10)', 4.40, 3),
+('A02', 'Meuleuse 125 mm', 37.85, 1),
+('D03', 'Boulon acier zingué 4x40 mm (sachet de 10)', 1.8, 3),
+('A03', 'Perceuse à colonne', 185.25, 1),
+('D04', 'Coffret à mêches à bois', 12.25, 3),
+('F03', 'Coffret à mêches plates', 6.25, 2),
+('F04', 'Fraise d’encastrement', 8.14, 2);
+
+INSERT INTO BON (NUMERO, DATE_CMDE, DELAI, ID_FOU) values 
+('BC0001', '2023-11-18', 3, 1);
