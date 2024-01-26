@@ -1,0 +1,79 @@
+--TP05
+--a)
+select * from ARTICLE ORDER BY DESIGNATION ASC;
+
+--b)
+select * from ARTICLE ORDER BY PRIX DESC;
+
+--c)
+select * from ARTICLE 
+where DESIGNATION LIKE 'Boulon%' 
+ORDER BY PRIX ASC;
+
+--d)
+select * from ARTICLE 
+where DESIGNATION LIKE BINARY '%sachet%' /* sensible à la casse */
+
+--e)
+select * from ARTICLE 
+where DESIGNATION LIKE '%Sachet%' /* insensible */
+
+--f)
+select * from ARTICLE 
+JOIN FOURNISSEUR ON ARTICLE.ID_FOU = FOURNISSEUR.ID
+ORDER BY FOURNISSEUR.NOM ASC
+ORDER BY ARTICLE.PRIX DESC;
+
+--g)
+select * from ARTICLE 
+JOIN FOURNISSEUR ON ARTICLE.ID_FOU = FOURNISSEUR.ID
+where FOURNISSEUR.NOM = 'Dubois & Fils';
+
+--h)
+select four.NOM, AVG(PRIX) from ARTICLE art, FOURNISSEUR four 
+where art.ID_FOU = four.ID
+group by four.NOM having four.NOM = 'Dubois & Fils';
+
+--i)
+select four.NOM, ROUND(AVG(PRIX), 2) from ARTICLE art, FOURNISSEUR four 
+where art.ID_FOU = four.ID
+group by four.NOM;
+
+--j)
+select * from BON where DATE_CMDE between '2019-03-01' AND '2019-04-05 12:00:00';
+
+--k)
+select BON.ID, art.DESIGNATION, cm.QTE from BON
+JOIN COMPO cm ON cm.ID_BON = BON.ID
+JOIN ARTICLE art ON cm.ID_ART = art.ID
+where art.DESIGNATION LIKE 'boulon%';
+
+--l)
+select BON.ID, art.DESIGNATION, cm.QTE, four.NOM from BON
+JOIN COMPO cm ON cm.ID_BON = BON.ID
+JOIN ARTICLE art ON cm.ID_ART = art.ID
+JOIN FOURNISSEUR four ON four.ID = art.ID_FOU
+where art.DESIGNATION LIKE 'boulon%';
+
+--m)
+select BON.ID, SUM(art.PRIX * cm.QTE) from BON
+JOIN COMPO cm ON cm.ID_BON = BON.ID
+JOIN ARTICLE art ON cm.ID_ART = art.ID
+GROUP BY BON.ID;
+
+--n)
+select BON.ID, SUM(cm.QTE) from BON
+JOIN COMPO cm ON cm.ID_BON = BON.ID
+GROUP BY BON.ID;
+
+--o)
+select BON.NUMERO, SUM(cm.QTE) tot from BON, COMPO cm
+where cm.ID_BON = BON.ID
+GROUP BY BON.NUMERO having tot > 25;
+
+--p)
+select SUM(art.PRIX * cm.QTE) from BON
+JOIN COMPO cm ON cm.ID_BON = BON.ID
+JOIN ARTICLE art ON cm.ID_ART = art.ID
+where MONTH(BON.DATE_CMDE) = 3 /* fais en mars car 0 cmde en avril ! */ 
+ 
