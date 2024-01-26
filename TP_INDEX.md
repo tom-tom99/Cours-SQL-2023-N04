@@ -17,7 +17,7 @@ O(n).
 Les indexs utilisent cette caractéristique importante de la hashmap pour accélérer les recherches dans les tables. Cela permet de simplement effectuer un petit calcul pour trouver la ligne qui nous intéresse plutôt que de parcourir ce qui pourrait être potentiellement des centaines de milliers, voir des millions de ligne.
 
 Pour bien comprendre ce qu'il se passe dans une base de données lorsque l'on crée un index, nous allons tenter d'implémenter un petit programme
-dans le langage de votre choix faisant office de démonstration du fonctionnement de son fonctionnement.
+dans le langage de votre choix faisant office de démonstration de son fonctionnement.
 
 Nous aurons définit une structure de données au format suivant :
 
@@ -90,4 +90,4 @@ Sur cette case de l'array, on vérifie si on y trouve une clé égale à l'ident
 
 
 
-Il est interdit pour cet exercice d'utiliser une hashmap issue de la librairie standard du langage de programmation que vous aurez choisi. Le but est d'avoir une idée de la raison pour laquelle les hashmaps sont si rapides et pourquoi utiliser des index est primordiale pour assurer les performances d'une base de données.
+Il est interdit pour cet exercice d'utiliser une hashmap issue de la librairie standard du langage de programmation que vous aurez choisi. Le but est d'avoir une idée de la raison pour laquelle les hashmaps sont si rapides et pourquoi utiliser des index est primordiale pour assurer les performances d'une base de données. **Vous devez donc implémenter votre propre hashmap**.
