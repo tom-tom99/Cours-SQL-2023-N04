@@ -197,12 +197,11 @@ ID NUMERO SUM(c.QTE)
 
 */
 --p. Calculez le coût total des commandes effectuées sur le mois d’avril
-SELECT b.ID, b.NUMERO, SUM(a.PRIX * c.QTE)
+SELECT SUM(a.PRIX * c.QTE) as coutTotal
 FROM BON b,COMPO c,ARTICLE a
 WHERE b.ID = c.ID_BON
 AND c.ID_ART = a.ID
-GROUP BY b.ID
-HAVING b.DATE_CMDE LIKE '2019-04-%';
+WHERE b.DATE_CMDE LIKE '2019-04-%';
 /* 0 résultat */
 
 --a. Sélectionnez les articles qui ont une désignation identique mais des fournisseurs différents (indice : réaliser une auto jointure i.e. de la table avec elle-même)
