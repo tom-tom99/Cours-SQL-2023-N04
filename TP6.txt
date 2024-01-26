@@ -1,0 +1,12 @@
+
+a) UPDATE article
+SET article.DESIGNATION = UPPER(article.DESIGNATION)
+WHERE article.PRIX > 10;
+
+b) UPDATE article
+SET article.DESIGNATION = LOWER(article.DESIGNATION)
+WHERE article.ID = 2;
+
+c) UPDATE article
+SET article.PRIX = article.PRIX * 1.10
+WHERE article.ID_FOU = (SELECT article.ID_FOU FROM fournisseur WHERE fournisseur.NOM = 'FDM SA');
