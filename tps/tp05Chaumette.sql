@@ -63,7 +63,19 @@ group by bon.ID having sum(qte)>25
 
 
 p. Calculez le coût total des commandes effectuées sur le mois d’avril
-select sum(prix*qte), bon.id from BON
+select sum(prix*qte) from BON
 inner join compo on bon.id = compo.id_bon 
 inner join article on compo.id_art = article.id
-where DATE_CMDE between '2019-04-01' and '2019-04-30'
+WHERE DATE_CMDE between '2019-04-01' and '2019-04-30'
+
+commande insérée pour verifier la requete ci dessus
+INSERT INTO BON (ID, NUMERO, DELAI, ID_FOU, DATE_CMDE) VALUES (4, 4, 5, 2, '2019-04-16 09:30:00');
+INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (2, 4, 5);
+INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (3, 4, 5);
+
+INSERT INTO BON (ID, NUMERO, DELAI, ID_FOU, DATE_CMDE) VALUES (3, 3, 5, 2, '2019-04-15 09:30:00');
+INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (4, 2, 5);
+INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (3, 2, 5);
+INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (8, 2, 1);
+INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (9, 2, 1);
+
