@@ -68,14 +68,53 @@ inner join compo on bon.id = compo.id_bon
 inner join article on compo.id_art = article.id
 WHERE DATE_CMDE between '2019-04-01' and '2019-04-30'
 
-commande insérée pour verifier la requete ci dessus
-INSERT INTO BON (ID, NUMERO, DELAI, ID_FOU, DATE_CMDE) VALUES (4, 4, 5, 2, '2019-04-16 09:30:00');
-INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (2, 4, 5);
-INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (3, 4, 5);
+-- commande insérée pour verifier la requete ci dessus
+-- INSERT INTO BON (ID, NUMERO, DELAI, ID_FOU, DATE_CMDE) VALUES (4, 4, 5, 2, '2019-04-16 09:30:00');
+-- INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (2, 4, 5);
+-- INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (3, 4, 5);
 
-INSERT INTO BON (ID, NUMERO, DELAI, ID_FOU, DATE_CMDE) VALUES (3, 3, 5, 2, '2019-04-15 09:30:00');
-INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (4, 2, 5);
-INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (3, 2, 5);
-INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (8, 2, 1);
-INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (9, 2, 1);
+-- INSERT INTO BON (ID, NUMERO, DELAI, ID_FOU, DATE_CMDE) VALUES (6, 6, 5, 2, '2020-10-16 09:30:00');
+-- INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (2, 4, 1);
+-- INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (3, 4, 1);
 
+-- INSERT INTO BON (ID, NUMERO, DELAI, ID_FOU, DATE_CMDE) VALUES (3, 3, 5, 2, '2019-04-15 09:30:00');
+-- INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (4, 2, 5);
+-- INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (3, 2, 5);
+-- INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (8, 2, 1);
+-- INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (9, 2, 1);
+
+Requêtes plus difficiles (facultatives)
+a. Sélectionnez les articles qui ont une désignation identique mais des fournisseurs 
+différents (indice : réaliser une auto jointure i.e. de la table avec elle-même)
+
+SELECT DISTINCT designation, id_fou
+FROM article a1, article a2
+WHERE a1.designation = a2.designation
+AND a1.ID_FOU != a2.ID_FOU
+
+
+b. Calculez les dépenses en commandes mois par mois (indice : utilisation des fonctions 
+MONTH et YEAR)
+select year(bon.DATE_CMDE) as Annee, month(bon.DATE_CMDE) as Mois, sum(article.prix * compo.qte)
+from bon
+inner join compo on bon.id = compo.id_bon 
+inner join article on compo.id_art = article.id
+group by YEAR(bon.DATE_CMDE), MONTH(bon.DATE_CMDE)
+
+
+c. Sélectionnez les bons de commandes sans article (indice : utilisation de EXISTS)
+
+select * from bon
+left join compo on bon.id = compo.id_bon 
+where compo.id_art is null
+
+-- ou alors
+-- SELECT * FROM bon
+-- WHERE EXISTS (SELECT * FROM compo WHERE id_art is null)
+
+
+d. Calculez le prix moyen des bons de commande par fournisseur
+select avg(prix*qte), bon.ID_FOU from bon 
+inner join compo on bon.id = compo.id_bon 
+inner join article on compo.id_art = article.id
+group by ID_FOU
