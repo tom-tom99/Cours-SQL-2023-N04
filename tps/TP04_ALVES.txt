@@ -1,0 +1,33 @@
+--a)
+select * from ARTICLE;
+
+-- b)
+select REF, DESIGNATION from ARTICLE where PRIX > 2;
+
+--c)
+select * from ARTICLE where PRIX < 6.25 AND PRIX > 2; 
+
+--d)
+select * from ARTICLE where PRIX between 2 AND 6.25;
+
+--e)
+select * from ARTICLE where PRIX NOT between 2 AND 6.25;
+
+--f)
+select * from ARTICLE where ID_FOU = (
+    select ID from FOURNISSEUR where NOM LIKE 'Française d''Imports') 
+    OR ID_FOU = (select ID from FOURNISSEUR where NOM= 'Dubois & Fils');
+
+--g)
+select * from ARTICLE 
+JOIN FOURNISSEUR ON ARTICLE.ID_FOU = FOURNISSEUR.ID
+where FOURNISSEUR.NOM IN ('Française d''Imports', 'Dubois & Fils');
+
+--h)
+select * from ARTICLE 
+where ID_FOU = (
+    select ID from FOURNISSEUR 
+    where NOM NOT IN ('Française d''Imports', 'Dubois & Fils'));
+
+--i)
+select * from BON where DATE_CMDE between '2019-02-01' AND '2019-04-30';
