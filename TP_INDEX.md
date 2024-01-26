@@ -1,5 +1,9 @@
 # TP Index
 
+## Préambule
+
+**Ce tp est totalement facultatif et doit être vu comme un jeu pour ceux qui s'intéresseraient au fonctionnement interne d'une base de données**
+
 Nous allons ici étudier l'une des strctures de données permettant d'indexer des éléments dans une base de données : la hashmap.
 
 Cette stucture de données possède la caractéristique de permettre la récupération d'un élément présent dans celle-ci sans en parcourir
@@ -8,8 +12,12 @@ la totalité, contrairement à un array.
 En notation big O, on dit que les recherches dans une hashmap ont une complexité de O(1), contrairement aux arrays qui ont une complexité
 O(n).
 
+## Contexte
+
+Les indexs utilisent cette caractéristique importante de la hashmap pour accélérer les recherches dans les tables. Cela permet de simplement effectuer un petit calcul pour trouver la ligne qui nous intéresse plutôt que de parcourir ce qui pourrait être potentiellement des centaines de milliers, voir des millions de ligne.
+
 Pour bien comprendre ce qu'il se passe dans une base de données lorsque l'on crée un index, nous allons tenter d'implémenter un petit programme
-dans le langage de votre choix faisant office de démonstration du fonctionnement d'un index.
+dans le langage de votre choix faisant office de démonstration du fonctionnement de son fonctionnement.
 
 Nous aurons définit une structure de données au format suivant :
 
@@ -82,4 +90,4 @@ Sur cette case de l'array, on vérifie si on y trouve une clé égale à l'ident
 
 
 
-Il est interdit pour cet exercice d'utiliser une hashmap issue de la libria
+Il est interdit pour cet exercice d'utiliser une hashmap issue de la librairie standard du langage de programmation que vous aurez choisi. Le but est d'avoir une idée de la raison pour laquelle les hashmaps sont si rapides et pourquoi utiliser des index est primordiale pour assurer les performances d'une base de données.
