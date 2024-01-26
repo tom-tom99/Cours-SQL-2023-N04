@@ -76,4 +76,76 @@ select SUM(art.PRIX * cm.QTE) from BON
 JOIN COMPO cm ON cm.ID_BON = BON.ID
 JOIN ARTICLE art ON cm.ID_ART = art.ID
 where MONTH(BON.DATE_CMDE) = 3 /* fais en mars car 0 cmde en avril ! */ 
- 
+
+--Ajout de bons suppl. pour requètes suppl.
+INSERT INTO BON (ID, NUMERO, DELAI, ID_FOU, DATE_CMDE) VALUES (3, 3, 8, 3, '2019-04-08 09:30:00');
+INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (4, 3, 20);
+INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (6, 3, 25);
+INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (8, 3, 10);
+
+INSERT INTO BON (ID, NUMERO, DELAI, ID_FOU, DATE_CMDE) VALUES (4, 4, 5, 2, '2019-03-18 09:30:00');
+INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (2, 4, 15);
+INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (3, 4, 5);
+INSERT INTO COMPO (ID_ART, ID_BON, QTE) values (10, 4, 6);
+
+--BC vides
+INSERT INTO BON (ID, NUMERO, DELAI, ID_FOU, DATE_CMDE) VALUES (5, 5, 0, 1, '2019-01-18 09:30:00');
+INSERT INTO BON (ID, NUMERO, DELAI, ID_FOU, DATE_CMDE) VALUES (6, 6, 0, 2, '2019-08-01 09:30:00');
+
+--+b)
+SELECT MONTH(BON.DATE_CMDE) AS MOIS, YEAR(BON.DATE_CMDE) AS YR, SUM(art.PRIX * cm.QTE) AS TOT FROM BON
+JOIN COMPO cm ON cm.ID_BON = BON.ID
+JOIN ARTICLE art ON cm.ID_ART = art.ID
+GROUP BY YR, MOIS
+ORDER BY YR, MOIS;
+-- Résultats avec ajouts du dessus :
+-- 127.0.0.1/compta2/BON/		http://localhost/phpmyadmin/index.php?route=/table/sql&db=compta2&table=bon
+--    Affichage des lignes 0 -  2 (total de 3, traitement en 0,0005 seconde(s).)
+
+-- MOIS   	YR   	TOT	
+-- 2	2019	561.62	
+-- 3	2019	367.38	
+-- 4	2019	255.50	
+
+--+c)
+SELECT BON.ID FROM BON
+LEFT JOIN COMPO cm ON cm.ID_BON = BON.ID
+where cm.ID_BON IS NULL;
+
+--+d)
+SELECT four.NOM, SUM(art.PRIX * cm.QTE) AS TOT FROM FOURNISSEUR four
+JOIN BON ON four.ID = BON.ID_FOU
+JOIN COMPO cm ON cm.ID_BON = BON.ID
+JOIN ARTICLE art ON cm.ID_ART = art.ID
+GROUP BY four.NOM; -- total cmdes par fournisseur OK
+-- 127.0.0.1/compta2/FOURNISSEUR/		http://localhost/phpmyadmin/index.php?route=/table/sql&db=compta2&table=bon
+--    Affichage des lignes 0 -  2 (total de 3, traitement en 0,0005 seconde(s).)
+
+-- NOM	TOT			
+-- Dubois & Fils	255.50	
+-- FDM SA	367.38	
+-- Française d'Imports	561.62	
+
+--autre essai:
+SELECT four.NOM, AVG(art.PRIX * cm.QTE) AS MOY FROM BON
+JOIN FOURNISSEUR four ON four.ID = BON.ID_FOU
+JOIN COMPO cm ON BON.ID = cm.ID_BON
+JOIN ARTICLE art ON cm.ID_ART = art.ID
+GROUP BY four.NOM;
+-- Résultats avec ajouts du dessus :
+127.0.0.1/compta2/four/		http://localhost/phpmyadmin/index.php?route=/table/sql&db=compta2&table=bon
+
+   Affichage des lignes 0 -  2 (total de 3, traitement en 0,0006 seconde(s).)
+
+
+SELECT four.NOM, AVG(art.PRIX * cm.QTE) AS MOY FROM BON
+JOIN FOURNISSEUR four ON four.ID = BON.ID_FOU
+JOIN COMPO cm ON BON.ID = cm.ID_BON
+JOIN ARTICLE art ON cm.ID_ART = art.ID
+GROUP BY four.NOM;
+
+
+NOM	MOY	
+Dubois & Fils	85.166667	
+FDM SA	52.482857	
+Française d'Imports	187.206667	
